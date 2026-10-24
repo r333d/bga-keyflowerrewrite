@@ -4,27 +4,7 @@ As of 24 October 2026, from `main` of this repo. The game has 26 states; players
 
 ## The year at a glance
 
-Each season repeats one turn loop; the highlighted steps have everyone playing at once.
-
-```mermaid
-flowchart TD
-  setup[Season setup] --> turn["Player turn<br/><small>bid, activate or pass</small>"]
-  turn -- bid or pass --> endturn[End turn]
-  turn -- activate --> pay[Pay or choose goods]
-  pay --> tu[Transport or upgrade]
-  tu --> endturn
-  endturn -- next player --> turn
-  endturn -- all passed --> boats["Boats<br/><small>one player at a time</small>"]
-  boats --> place[Place new tiles]
-  place --> season{Which season?}
-  season -- spring, summer --> setup
-  season -- autumn --> winter[Winter tiles]
-  winter --> setup
-  season -- winter --> scoring[Final scoring]
-  scoring --> gameend[End of game]
-  classDef everyone fill:#e3eefc,stroke:#2f6fd6,stroke-width:2px,color:#000
-  class place,winter,scoring everyone
-```
+![Flowchart of a Keyflower year: season setup leads to the player turn loop (bid or pass, or activate, then pay or choose goods, then transport or upgrade, then end turn). When all have passed: boats, then place new tiles (everyone at once), then by season: back to setup after spring or summer, winter tiles (everyone at once) after autumn, final scoring (everyone at once) and the end of the game after winter.](game-flow.png)
 
 Spring, summer and autumn each run the same turn loop until everyone passes; then boats are taken one by one and everyone places their new tiles at once. After autumn, everyone picks winter tiles; after winter, everyone arranges their final scoring.
 
