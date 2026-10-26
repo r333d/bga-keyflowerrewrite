@@ -2,6 +2,8 @@
 
 As of 24 October 2026, from `main` of this repo. The game has 26 states; players decide in 12 of them, and 3 of those have everyone playing at once (village building, winter tiles, final scoring).
 
+What the Farmers and Merchants expansions would add: [expansions.md](expansions.md) (draft).
+
 ## The year at a glance
 
 ![Flowchart of a Keyflower year: season setup leads to the player turn loop (bid or pass, or activate, then pay or choose goods, then transport or upgrade, then end turn). When all have passed: boats, then place new tiles (everyone at once), then by season: back to setup after spring or summer, winter tiles (everyone at once) after autumn, final scoring (everyone at once) and the end of the game after winter.](game-flow.png)
