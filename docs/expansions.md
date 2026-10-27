@@ -1,6 +1,6 @@
 # Keyflower expansions: new decisions
 
-As of 26 October 2026. Draft: still being checked against the rules. Sources: the rulebooks for The Farmers (2013) and The Merchants (2014). Neither expansion is in the BGA code today, in the published game or in the rewrite. Promo tiles are left out.
+As of 27 October 2026. Draft. Sources: the rulebooks for The Farmers (2013) and The Merchants (2014). Neither expansion is in the BGA code today, in the published game or in the rewrite. Promo tiles are left out.
 
 Most new choices fit inside steps that already exist: activating a tile, transport, upgrade, boats and final scoring (see the [game flow map](game-flow.md)). A few need new decision points:
 
@@ -40,6 +40,8 @@ Automatic, no decision:
 ## The Farmers
 
 The Farmers adds animals (sheep, pigs, cows) that live in fields, and wheat, which is held like skills and spent for extra transport. A field is an area bounded by roads, water and unconnected tile edges, and it can span several tiles. Each field scores once for each type of animal in it, so animals in many fields score more than many animals in one field.
+
+**Fields from today's data:** checked against the art of all 64 base tiles, a tile's fields can be worked out from the edge types the game already stores (`tile_edgetype1`–`6`). The roads on a tile meet in the middle, so its fields are the stretches of border between consecutive roads. A river splits a tile only when it crosses it (boats). The single river edge on a Home tile is an inlet that one field wraps around, which gives the 5 fields per Home tile the rulebook describes. Fences, walls and streams inside a tile don't count. Across tiles, grass edges join fields, a road edge joins the fields on each side of the road, and a river edge joins nothing. So fields need a function, not new tile data. Item locations could get an optional field now, so animals don't need a migration later.
 
 | Decision | Who, when | Fits into | Notes |
 | --- | --- | --- | --- |
