@@ -1507,14 +1507,21 @@ html {
     border-top: 1px solid rgb(0 0 0 / 0.08);
 }
 
-/* Resources from the old game's sprite: iron, stone, wood, gold, points, 24px each */
+/* Resources: Daniel's drawings, as the meeples and seasons */
 .kf_icon_resource {
-    background: url("img/resources.png") 0 0 / 500% 100% no-repeat;
+    background: center / contain no-repeat;
 }
-.kf_icon_resource[data-kf-kind="iron"] { background-position: 0 0; }
-.kf_icon_resource[data-kf-kind="stone"] { background-position: 25% 0; }
-.kf_icon_resource[data-kf-kind="wood"] { background-position: 50% 0; }
-.kf_icon_resource[data-kf-kind="gold"] { background-position: 75% 0; }
+.kf_icon_resource[data-kf-kind="iron"] { background-image: url("img/drawings/resource-iron.svg"); }
+.kf_icon_resource[data-kf-kind="stone"] { background-image: url("img/drawings/resource-stone.svg"); }
+.kf_icon_resource[data-kf-kind="wood"] { background-image: url("img/drawings/resource-wood.svg"); }
+.kf_icon_resource[data-kf-kind="gold"] { background-image: url("img/drawings/resource-gold.svg"); }
+/* In text: the drawings are narrow (about 60% of their square), so the box keeps only the drawing's
+   width, and a comma or full stop after it doesn't float away */
+.kf_with_icon > .kf_icon_resource {
+    width: 0.85em;
+    margin-left: 0.2em;
+    background-size: auto 100%;
+}
 
 /* In the picker's "Take" choices (Workshop): 24px, like the tools beside them */
 .kf_pick_choice .kf_icon_resource {
