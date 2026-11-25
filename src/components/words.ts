@@ -80,6 +80,24 @@ export class WordsComponent {
             Html.span({ classes: ['kf_icon', 'kf_icon_tool'], attrs: { 'data-kf-kind': skill, 'aria-hidden': 'true' } }));
     }
 
+    /** Any worker (drawn from the bag, or of your choice): "worker", then a white meeple, as on the tiles. */
+    public anyWorker(plural: boolean = false): HTMLElement {
+        return this.withIcon([], plural ? _('workers') : _('worker'),
+            Html.span({ classes: ['kf_icon', 'kf_worker'], attrs: { 'data-kf-color': 'any', 'aria-hidden': 'true' } }));
+    }
+
+    /** Any resource: "resource", then a white one, as on the tiles. */
+    public anyResource(plural: boolean = false): HTMLElement {
+        return this.withIcon([], plural ? _('resources') : _('resource'),
+            Html.span({ classes: ['kf_icon', 'kf_icon_resource'], attrs: { 'data-kf-kind': 'any', 'aria-hidden': 'true' } }));
+    }
+
+    /** Any tool: "tool", then the three tools together, as on the tiles. */
+    public anyTool(plural: boolean = false): HTMLElement {
+        return this.withIcon([], plural ? _('tools') : _('tool'),
+            Html.span({ classes: ['kf_icon', 'kf_icon_tool'], attrs: { 'data-kf-kind': 'any', 'aria-hidden': 'true' } }));
+    }
+
     /** "point" or "points", then the points icon. */
     public points(plural: boolean = true): HTMLElement {
         return this.withIcon([], plural ? _('points') : _('point'),
@@ -88,7 +106,8 @@ export class WordsComponent {
 
     /**
      * A text with `${name}`s (the tile rules), each name as its word and icon. Generic names
-     * ("${workers}", "${skill}") are just the word; names the game doesn't know stay as they are.
+     * ("${workers}", "${skill}") get the tiles' icons for any worker, resource or tool; names the game
+     * doesn't know stay as they are.
      */
     public format(text: string): Child[] {
         return splitNames(text).map(p => 'text' in p
@@ -105,12 +124,12 @@ export class WordsComponent {
         switch (name) {
             case 'point': return this.points(false);
             case 'points': return this.points(true);
-            case 'worker': return _('worker');
-            case 'workers': return _('workers');
-            case 'skill': return _('tool');
-            case 'skills': return _('tools');
-            case 'resource': return _('resource');
-            case 'resources': return _('resources');
+            case 'worker': return this.anyWorker(false);
+            case 'workers': return this.anyWorker(true);
+            case 'skill': return this.anyTool(false);
+            case 'skills': return this.anyTool(true);
+            case 'resource': return this.anyResource(false);
+            case 'resources': return this.anyResource(true);
             default: return name;
         }
     }

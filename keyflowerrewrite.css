@@ -36,6 +36,8 @@ html {
     --kf-meeple-yellow: url("img/drawings/meeple-yellow.svg");
     --kf-meeple-blue: url("img/drawings/meeple-blue.svg");
     --kf-meeple-green: url("img/drawings/meeple-green.svg");
+    /* Any worker, as the tiles show it: a white meeple */
+    --kf-meeple-any: url("img/drawings/meeple-white.svg");
     /* The start player meeple (Daniel's drawing): purple, with a raised arm */
     --kf-meeple-purple: url("img/drawings/start-player.svg");
     /* Victory points as the tiles show them: a gold coin (Daniel's drawing), in place of BGA's star */
@@ -749,6 +751,7 @@ html {
 .kf_worker[data-kf-color="yellow"] { --kf-meeple: var(--kf-meeple-yellow); }
 .kf_worker[data-kf-color="blue"] { --kf-meeple: var(--kf-meeple-blue); }
 .kf_worker[data-kf-color="green"] { --kf-meeple: var(--kf-meeple-green); }
+.kf_worker[data-kf-color="any"] { --kf-meeple: var(--kf-meeple-any); }
 
 /* A season in the log and the status bar: its icon (Daniel's drawings), then its name, sized to the text */
 .kf_season_icon {
@@ -1515,6 +1518,8 @@ html {
 .kf_icon_resource[data-kf-kind="stone"] { background-image: url("img/drawings/resource-stone.svg"); }
 .kf_icon_resource[data-kf-kind="wood"] { background-image: url("img/drawings/resource-wood.svg"); }
 .kf_icon_resource[data-kf-kind="gold"] { background-image: url("img/drawings/resource-gold.svg"); }
+/* Any resource, as the tiles show it: a white one */
+.kf_icon_resource[data-kf-kind="any"] { background-image: url("img/drawings/resource-white.svg"); }
 /* In text: the drawings are narrow (about 60% of their square), so the box keeps only the drawing's
    width, and a comma or full stop after it doesn't float away */
 .kf_with_icon > .kf_icon_resource {
@@ -1545,12 +1550,17 @@ html {
     width: 32px;
     height: 32px;
     zoom: 0.57;
+    /* A bit more than the shared gap (0.25em once zoomed, which shrinks margins too): the tools are
+       square pictures that fill their box, where the drawings have room around them */
+    margin-left: 0.45em;
     vertical-align: -0.55em;
     background-image: url("img/tiles-symbols.png");
 }
 .kf_icon_tool[data-kf-kind="anvil"] { background-position: -402px -15px; }
 .kf_icon_tool[data-kf-kind="pickaxe"] { background-position: -468px -15px; }
 .kf_icon_tool[data-kf-kind="saw"] { background-position: -402px -66px; }
+/* Any tool, as the tiles show it: the three tools together */
+.kf_icon_tool[data-kf-kind="any"] { background-position: -468px -66px; }
 
 /* Points: Daniel's drawing */
 .kf_icon_points {
