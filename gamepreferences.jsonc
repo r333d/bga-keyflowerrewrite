@@ -1,0 +1,14 @@
+{
+    // Workers as shapes: each worker colour also gets its own shape (red circle, yellow square, blue
+    // triangle, green diamond), for players who find the colours hard to tell apart. Off by default;
+    // the colours stay the same, so it changes nothing for the other players.
+    "101": {
+        "name": "Workers as shapes",
+        "needReload": false,
+        "values": {
+            "0": { "name": "Off" },
+            "1": { "name": "On" }
+        },
+        "default": 0
+    }
+}

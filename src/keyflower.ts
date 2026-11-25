@@ -67,6 +67,23 @@ export class Game extends BaseGame<KFPlayer, KFGameDatas> {
         this.panelsComponent.setup();
         this.showRulesOnTap(mainElem);
         this.showSeason(gamedatas.season);
+        this.showWorkerShapes();
+    }
+
+    /** Player preferences (gamepreferences.jsonc). 100 is kept for auto-confirm (states/base.ts). */
+    private static readonly PREF_WORKER_SHAPES = 101;
+
+    /**
+     * The "Workers as shapes" preference: every worker (market, villages, boats, panels, log, picker)
+     * is drawn as its colour's shape instead of a meeple. The CSS swaps the images; this keeps the class
+     * on the page in step with the preference, also when the player changes it during the game.
+     */
+    private showWorkerShapes(): void {
+        const apply = (value: number) => document.documentElement.classList.toggle('kf_shapes', value == 1);
+        apply(this.bga.userPreferences.get(Game.PREF_WORKER_SHAPES));
+        this.bga.userPreferences.onChange = (prefId, value) => {
+            if (prefId == Game.PREF_WORKER_SHAPES) { apply(value); }
+        };
     }
 
     /**

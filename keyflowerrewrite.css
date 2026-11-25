@@ -44,6 +44,15 @@ html {
     --kf-victory-points: url("img/drawings/victory-points.svg");
 }
 
+/* "Workers as shapes" (a player preference): each colour's shape instead of the meeple, everywhere a
+   worker is drawn. The colours stay the same; the start player keeps its meeple */
+html.kf_shapes {
+    --kf-meeple-red: url("img/drawings/token-red.svg");
+    --kf-meeple-yellow: url("img/drawings/token-yellow.svg");
+    --kf-meeple-blue: url("img/drawings/token-blue.svg");
+    --kf-meeple-green: url("img/drawings/token-green.svg");
+}
+
 #kf_main {
     /* One tile's size; everything on the board scales from it. */
     --kf-tile-w: 128px;
