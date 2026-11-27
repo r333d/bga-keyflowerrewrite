@@ -1532,6 +1532,14 @@ html {
     background-size: auto 100%;
 }
 
+/* On a village tile's pill (village.ts, resources on tiles): 18px tall, as narrow as the drawing, as in the
+   mockup. Two classes, so it wins over the pill's square size for the old sprite wherever the rules sit */
+.kf_res_pill .kf_icon.kf_icon_resource {
+    width: 12px;
+    height: 18px;
+    background-size: auto 100%;
+}
+
 /* Tools from the game's sprite, drawn at 32px, scaled to the text */
 .kf_with_icon > .kf_icon_tool {
     width: 32px;
