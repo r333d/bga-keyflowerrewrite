@@ -6,6 +6,7 @@ import { MoreAnimations } from "../libs/more-animations";
 import { activationRows, activationSummary } from "./activations";
 import { TranslationComponent } from "./translation";
 import { playingPlayerId, seatOrder } from "../libs/players";
+import { marketOrder } from "../libs/turn-order";
 
 /** One bid as shown on a tile. */
 interface ShownBid {
@@ -53,7 +54,7 @@ export class MarketComponent extends BaseComponent<MarketLot> {
         // A named region (by its heading), so screen readers can jump to it
         return Html.div({ id: 'kf_market', attrs: { role: 'region', 'aria-labelledby': 'kf_market_title' } },
             this.titleDiv(),
-            ...this.bga.gameui.gamedatas.market.map(mt => this.lotDiv(mt))
+            ...marketOrder(this.bga.gameui.gamedatas.market).map(mt => this.lotDiv(mt))
         );
     }
 
