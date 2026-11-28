@@ -51,8 +51,8 @@ class PlayerTurn extends AbstractState {
             game: $game,
             id: 22,
             type: StateType::ACTIVE_PLAYER,
-            description: clienttranslate('${actplayer} must either bid for a tile, activate a tile, or pass.'),
-            descriptionMyTurn: clienttranslate('${you} must either bid for a tile, activate a tile, or pass'),
+            description: clienttranslate('${actplayer} must bid on a tile, use one, or pass'),
+            descriptionMyTurn: clienttranslate('${you} must bid on a tile, use one, or pass'),
             updateGameProgression: true);
     }
 
