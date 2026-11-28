@@ -41,6 +41,32 @@ export class MoreAnimations {
         });
     }
 
+    /**
+     * Flies a copy of an element from where it's drawn to `to` (center to center), shrinking and fading
+     * as it arrives, e.g. workers going back to a player's panel; the element itself is left as it is,
+     * for the caller to remove. Resolves at once when animations are off.
+     */
+    async flyAway(el: Element, to: DOMRect | undefined): Promise<void> {
+        const from = el.getBoundingClientRect();
+        if (!to || !this.animationsActive() || from.width == 0) {
+            return;
+        }
+        const ghost = el.cloneNode(true) as HTMLElement;
+        ghost.removeAttribute('id');
+        ghost.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+        Object.assign(ghost.style, { position: 'fixed', left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`,
+            height: `${from.height}px`, margin: '0', zIndex: '10', pointerEvents: 'none', transform: 'none' });
+        document.body.appendChild(ghost);
+        const start = center(from), end = center(to);
+        const dx = end.x - start.x, dy = end.y - start.y;
+        const move = ghost.animate([
+            { translate: '0 0', scale: '1', opacity: 1 },
+            { translate: `${dx}px ${dy}px`, scale: '0.6', opacity: 0.2 },
+        ], { duration: Math.min(900, 400 + Math.hypot(dx, dy) * 0.6), easing: 'cubic-bezier(.4,0,.6,1)' });
+        await move.finished.catch(() => { /* cancelled: nothing to wait for */ });
+        ghost.remove();
+    }
+
     async wait(millis: number): Promise<any> {
         return this.animationManager.base.wait(millis);
     }

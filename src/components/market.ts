@@ -111,8 +111,41 @@ export class MarketComponent extends BaseComponent<MarketLot> {
         this.redraw(tileId);
     }
 
+    /** The workers of a player's bid on a tile; empty when they have none there. */
+    public bidWorkers(tileId: number, playerId: number): Worker[] {
+        return this.tile(tileId)?.bids.find(b => b.player_id == playerId)?.workers ?? [];
+    }
+
+    /** The workers used on a tile this season, all uses together. */
+    public usedWorkers(tileId: number): Worker[] {
+        return (this.tile(tileId)?.activations ?? []).flat();
+    }
+
+    /** The lot's element (the tile with its bids), while it's in the market. */
+    public lotElement(tileId: number): HTMLElement | undefined {
+        return document.getElementById(`kf_lot_${tileId}`) ?? undefined;
+    }
+
+    /** The workers' rows on a tile, if it's been used. */
+    public usesElement(tileId: number): HTMLElement | undefined {
+        return document.querySelector<HTMLElement>(`#kf_lot_${tileId} .kf_uses`) ?? undefined;
+    }
+
+    /** Takes a lot out of the market (the end of the season: discarded, or won). */
+    public removeLot(tileId: number): void {
+        const market = this.bga.gameui.gamedatas.market;
+        const i = market.findIndex(mt => mt.id == tileId);
+        if (i >= 0) { market.splice(i, 1); }
+        this.lotElement(tileId)?.remove();
+    }
+
+    /** Draws the market again from the game data (a new season brings new tiles). */
+    public replace(): void {
+        document.getElementById('kf_market')?.replaceWith(this.setup());
+    }
+
     /** The element showing a player's bid on a tile, along the tile's edge. */
-    private shownBid(tileId: number, playerId: number): HTMLElement | undefined {
+    public shownBid(tileId: number, playerId: number): HTMLElement | undefined {
         return document.querySelector<HTMLElement>(`#kf_lot_${tileId} [data-kf-player="${playerId}"]`) ?? undefined;
     }
 

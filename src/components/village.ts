@@ -1,4 +1,4 @@
-import { KFGameDatas, KFPlayer, Resource, ResourceType, Village, VillageTile, Worker } from "../kfdata";
+import { KFGameDatas, KFPlayer, Resource, ResourceType, StockTile, Village, VillageTile, Worker } from "../kfdata";
 import { BaseComponent } from "../libs/basecomponent";
 import { Html } from "../libs/html";
 import { hexMark } from "../libs/hexmark";
@@ -96,6 +96,7 @@ export class VillageComponent extends BaseComponent<any> {
                 Html.img({ classes: 'kf_avatar', attrs: { src: this.bga.players.getPlayerAvatarUrl(village.player_id, 32), alt: '' } }),
                 Html.span({ text: player.name }),
                 village.player_id == playingPlayerId(this.bga) ? Html.span({ classes: 'kf_village_you', text: _('(you)') }) : undefined),
+            this.wonStrip(village),
             // The map scrolls sideways when the village is wider than the screen (phones); the name stays.
             Html.div({ classes: 'kf_village_scroll' },
                 Html.div({
@@ -171,6 +172,49 @@ export class VillageComponent extends BaseComponent<any> {
             await Promise.all(Array.from(div.querySelectorAll<HTMLElement>('.kf_res_pill')).filter(p => kinds.has(p.dataset['kfKind'] as ResourceType))
                 .map(p => this.animations.animateMove(p, from)));
         }
+    }
+
+    /**
+     * The tiles won this season, waiting to be placed, beside the village as in the mockup ("Won this
+     * season"); always there, empty when there are none, so a won tile has somewhere to go.
+     */
+    private wonStrip(village: Village): HTMLElement {
+        const won = village.won_tiles ?? [];
+        const strip = Html.div({ id: `kf_won_${village.player_id}`, classes: 'kf_won', attrs: { role: 'group', 'aria-label': _('Won this season') } },
+            Html.span({ classes: 'kf_won_label', text: _('Won this season') }),
+            ...won.map(t => Html.div({ id: `kf_won_tile_${t.tile_id}`, classes: 'kf_tile',
+                attrs: { 'data-kf-tile': t.tiletype, role: 'img', 'aria-label': this.translations.tileName(t.tiletype) },
+                title: this.translations.tileName(t.tiletype) })));
+        strip.hidden = won.length == 0;
+        return strip;
+    }
+
+    /** A tile won at the end of the season, added to the player's strip; returns it, to fly it there. */
+    public addWonTile(playerId: number, tile: StockTile): HTMLElement | undefined {
+        const village = this.bga.gameui.gamedatas.villages[playerId];
+        if (!village) { console.error(`addWonTile: no village for ${playerId}`); return undefined; }
+        village.won_tiles = [...(village.won_tiles ?? []), tile];
+        document.getElementById(`kf_won_${playerId}`)?.replaceWith(this.wonStrip(village));
+        return document.getElementById(`kf_won_tile_${tile.tile_id}`) ?? undefined;
+    }
+
+    /** The workers' rows on a village tile, if it's been used this season. */
+    public usesElement(tileId: number): HTMLElement | undefined {
+        return document.getElementById(`kf_uses_${tileId}`) ?? undefined;
+    }
+
+    /** The workers used on a village tile this season, all uses together. */
+    public usedWorkers(tileId: number): Worker[] {
+        return (this.tile(tileId)?.activations ?? []).flat();
+    }
+
+    /** The end of the season: the workers leave a village tile (to its owner's stock). */
+    public clearUses(tileId: number): void {
+        const tile = this.tile(tileId);
+        if (tile) { tile.activations = []; }
+        this.usesElement(tileId)?.remove();
+        const el = document.getElementById(`kf_tile_${tileId}`);
+        if (tile && el) { el.setAttribute('aria-label', [this.translations.tileName(tile.tiletype), activationSummary(tile.activations)].filter(x => x).join('. ')); }
     }
 
     /** The village tile with this id, in anyone's village. */

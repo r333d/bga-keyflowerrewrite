@@ -182,6 +182,42 @@ html {
     inset: 0;
 }
 
+/* A boat you can take (SelectBoat): a pointer, and the market's line on hover, keyboard focus and once chosen */
+.kf_boat.kf_selectable {
+    cursor: pointer;
+}
+
+.kf_boat.kf_selectable:focus-visible {
+    outline: none;
+}
+
+@media (hover: hover) {
+    .kf_boat.kf_selectable:hover .kf_hexmark {
+        opacity: 1;
+    }
+}
+
+.kf_boat.kf_selectable:focus-visible .kf_hexmark {
+    opacity: 1;
+}
+
+.kf_boat.kf_selectable:focus-visible .kf_hexmark_line {
+    stroke: #1f2328;
+}
+
+/* A taken boat stays where it was, empty, with the player who took it under it, as in the mockup */
+.kf_boat_owner {
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 24px;
+    height: 24px;
+    transform: translateX(-50%);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
 .kf_boat_item {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -390,6 +426,33 @@ html {
    the screen stops at the screen's width (max-width above) and scrolls sideways; its name stays in place */
 .kf_village_scroll {
     overflow-x: auto;
+}
+
+/* The tiles won this season, waiting to be placed (village.ts), as in the mockup: a box in the player's
+   color above the village, with a label; the tiles at the village's size */
+.kf_won {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 8px;
+    padding: 6px 8px;
+    border: 2px solid var(--kf-player-color);
+    border-radius: 8px;
+}
+
+.kf_won[hidden] {
+    display: none;
+}
+
+.kf_won_label {
+    flex-basis: 100%;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.kf_won .kf_tile {
+    position: relative;
 }
 
 .kf_village_name {

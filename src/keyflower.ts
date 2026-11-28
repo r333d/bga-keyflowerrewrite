@@ -20,6 +20,7 @@ import { BaseGame } from "./libs/basegame";
 import { Html } from "./libs/html";
 import { activePlayersChanged } from "./states/base";
 import { PlayerTurnState } from "./states/player_turn";
+import { EndOfSeasonState, ExpandVillagesState, SelectBoatState, TurnOrderAndUnloadBoatsState } from "./states/end_of_season";
 import { SeasonSetupState } from "./states/season_setup";
 import { IDS, View } from "./view";
 import { playingPlayerId } from "./libs/players";
@@ -119,7 +120,11 @@ export class Game extends BaseGame<KFPlayer, KFGameDatas> {
 
     private registerStates(): void {
         this.bga.states.register('PlayerTurn', new PlayerTurnState(this.bga, this.animationManager, this.marketComponent, this.villageComponent, this.translationComponent, this.panelsComponent, this.tileRulesComponent));
-        this.bga.states.register('SeasonSetup', new SeasonSetupState(this.bga, this.animationManager));
+        this.bga.states.register('SeasonSetup', new SeasonSetupState(this.bga, this.animationManager, this.marketComponent, this.dockComponent, this.panelsComponent));
+        this.bga.states.register('EndOfSeason', new EndOfSeasonState(this.bga, this.animationManager, this.marketComponent, this.villageComponent, this.panelsComponent, this.moreAnimations));
+        this.bga.states.register('TurnOrderAndUnloadBoats', new TurnOrderAndUnloadBoatsState(this.bga, this.animationManager));
+        this.bga.states.register('SelectBoat', new SelectBoatState(this.bga, this.animationManager, this.dockComponent, this.panelsComponent, this.translationComponent, this.moreAnimations));
+        this.bga.states.register('ExpandVillages', new ExpandVillagesState(this.bga, this.animationManager));
     }
 
     private makeHtml(marketEl: HTMLElement, dockEl: HTMLElement, villagesEl: HTMLElement): HTMLElement {

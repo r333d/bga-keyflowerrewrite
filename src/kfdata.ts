@@ -53,7 +53,7 @@ export interface Boat {
 export type Dock = Boat[];
 
 export interface StockTile {
-    id: number;
+    tile_id: number;
     tiletype: TileType;
 }
 
